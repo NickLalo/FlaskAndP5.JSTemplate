@@ -37,8 +37,13 @@ $(document).ready(function()
             console.log(data);
             if(status == "success")
             {
-                // update the text for the specific html element based on tag
-                $("#dataP").text(data);
+                for (var key in data)
+                {
+                    // normal way of formatting strings
+                    // $("#dataDiv").append("<p> " + key + " " + data[key] + " </p> ");
+                    // template literally that uses backtick.
+                    $("#dataDiv").append(`<p> ${key}: ${data[key]} </p> `);
+                }
             }
         })
 });
