@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <!-- import ajax from the web -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <!-- import ajax from the web -->
+        <script src="https://cdn.jsdelivr.net/npm/p5@0.10.2/lib/p5.js"></script>
+        
+        <!-- <script type="text/javascript" src="{{ url_for('static',filename='graph.js') }}"></script> -->
+        <style>
+            p.title
+            {
+                font-size: 30px;
+                line-height: 0.1;
+            }
+
+            li.item 
+            {
+                font-size: 16px;
+            }
+            p.explanation
+            {
+                font-size: 16px;
+                line-height: 0.1;
+            }
+        </style>
+    </head>
+<body>
+    <p class="title">Template project</p>
+    <ul>
+        <li class="item">Flask backend</li>
+        <li class="item">P5.JS sketch to visualize the data</li>
+        <li class="item">Jquery AJAX calls to update the sketch</li>
+      </ul>
+    <p class="explanation">When the page loads a graph will be drawn with random connections between layers.</p>
+    <p class="explanation">Clicking the "get a new graph" button will update the sketch without reloading the entire page using an jquery ajax call</p>
+
+    <p id=graphData></p>
+
+    <button type="button" onclick="post_new_graph()">Get a new graph</button>
+    <br>
+
+    <div id="myContainer"> </div>
+
+    <!-- import p5.js code from dyn/js using jinja formatting so that we can pass python var directly to javascript var-->
+    <!-- add this at the end of the html file so that our js code can update html elements -->
+    <script> {% include "dynJS/graph.js" %} </script>
+</body>
+</html>

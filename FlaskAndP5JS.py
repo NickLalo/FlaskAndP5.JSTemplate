@@ -1,46 +1,46 @@
 from flask import Flask, render_template, request, jsonify
-import re
+import random
 from BlueprintExamplePage import blueprint_example_page
 
 
 # declaration of our flask object?
 application = Flask(__name__)
+# no cache so that flask will always check JS and CSS files for updates
+application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 # linking the blueprint page to our main page
 application.register_blueprint(blueprint_example_page)
 # or linking the account with a url prefix.  Now you need to type in prefixGoesHere/ before typing in the name of a page
 # application.register_blueprint(blueprint_example_page, url_prefix="/prefixGoesHere")
 
 
-# used to sanitize input and get rid of any characters that might be used in an injection attack
-# [^a-zA-Z0-9(),.!?\"\'\s\n\t]  ^ any that isn't the following gets replaced by "".  removed.
-def sanitize(my_string):
-    clean_string = re.sub("[^a-zA-Z0-9(),.!?\"\'\s]", "", my_string)
-    return clean_string
+def build_graph():
+    layerOne = ["b", "c", "d"]
+    layerTwo = ["e", "f", "g"]
+    layerThree = ["h", "i", "j"]
+
+    zeroOut = "a"
+    OneOut = random.choice(layerOne)
+    TwoOut = random.choice(layerTwo)
+
+    graphData = \
+        {
+            zeroOut: layerOne,
+            OneOut: layerTwo,
+            TwoOut: layerThree,
+        }
+    return graphData
 
 
 @application.route("/", methods=["GET"])
 def home():
-    return render_template("Basic.html")
+    graphData = build_graph()
+    return render_template("graph.html", graphData=graphData)
 
 
-@application.route("/send_data", methods=["POST"])
-def send_data():
-    data = \
-        {
-            "a": ["b", "a1", "a2"],
-            "b": ["c", "b1", "b2"],
-            "c": ["c1", "c2"]
-        }
-    return jsonify(data)
-
-
-@application.route("/form_submission", methods=["POST"])
-def form_submission():
-    data = \
-        {
-            "userInput": sanitize(request.form["userInput"])
-        }
-    return jsonify(data)
+@application.route("/post_new_graph", methods=["POST"])
+def post_new_graph():
+    graphData = build_graph()
+    return jsonify(graphData)
 
 
 if __name__ == "__main__":
