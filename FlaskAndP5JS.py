@@ -3,7 +3,7 @@ import random
 from BlueprintExamplePage import blueprint_example_page
 
 
-# declaration of our flask object?
+# declaration of our flask object
 application = Flask(__name__)
 # no cache so that flask will always check JS and CSS files for updates
 application.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
